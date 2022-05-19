@@ -25,12 +25,12 @@ export default function App() {
   return (
     <div>
       <input type="file" name="file" onChange={onChangeFile} />
-
+      <p>Select a file to show details</p>
         <div>
           <List array={data}/>
         </div>
 
-        <p>Select a file to show details</p>
+       
 
     </div>
   );
