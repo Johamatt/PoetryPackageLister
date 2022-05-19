@@ -6,15 +6,17 @@ const Modal = (props) => {
   const [pack, setPack] = useState(props.pack);
   const [packagelist, setPackagelist] = useState(props.packagelist.array);
 
-  useEffect(() => {}, [searchDependecy]);
+  const [reverseDependencies, setReverseDependencies] = useState([]);
 
   if (!props.show) {
     return null;
   }
 
-  function searchDependecy(dependency) {
+  function searchLinkedDependecy(dependency) {
     packagelist.map((pack1) => {
-      if (dependency.includes(pack1.name)) {
+      if (dependency === pack1.name) {
+        // TODO: Include all optional dependencies as well, but
+        // make clickable only those that are installed
         setPack(pack1);
       }
     });
@@ -31,57 +33,50 @@ const Modal = (props) => {
           <p>Description: {pack.description}</p>
 
           <div>
-            <h2>Packages Extra: </h2>
-            {Object.keys(pack.extras).length !== 0 ? (
-              Object.keys(pack.extras).map((key) => {
-                return (
-                  <div>
-                    <ul>
-                      <b>{key}: </b>
-                      {pack.extras[key].map((dependency) => {
-                        return (
-                          <li
-                            className="modal-dependencies"
-                            onClick={() => searchDependecy(dependency)}
-                          >
-                            {/* // <a /> packages onClick name returns modal */}{" "}
-                            {dependency},&nbsp;
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
-                );
-              })
-            ) : (
-              <div />
-            )}
+            <h2>Dependencies: </h2>
 
-            {Object.keys(pack.dependencies).length !== 0 ? (
-              Object.keys(pack.dependencies).map((key) => {
-                return (
-                  <div>
-                    <ul>
-                      <b>{key}: </b>
-                      {pack.dependencies[key].map((dependency) => {
-                        return (
-                          <li
-                            className="modal-dependencies"
-                            onClick={() => searchDependecy(dependency)}
-                          >
-                            {/* // <a /> packages onClick name returns modal */}{" "}
-                            {dependency},&nbsp;
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
-                );
-              })
-            ) : (
-              <div />
-            )}
+            <div>
+              <ul>
+                {pack.dependencies.length !== 0 ? (
+                  pack.dependencies.map((key) => {
+                    return (
+                      <li
+                        className="modal-dependencies"
+                        onClick={() => searchLinkedDependecy(key)}
+                      >
+                        {key},&nbsp;
+                      </li>
+                    );
+                  })
+                ) : (
+                  <div />
+                )}
+              </ul>
+            </div>
           </div>
+
+          <h3>Reverse-Dependencies</h3>
+          <div>
+            <ul>
+              {packagelist.map((a) => {
+                if (a.dependencies.includes(pack.name)) {
+                return (
+                  <li
+                    className="modal-dependecies"
+                    onClick={() => searchLinkedDependecy(a.name)}
+                  >
+                    {a.name}, &nbsp;
+                  </li>
+                );
+                }})}
+            </ul>
+          </div>
+
+          {/* packagelist.map((a) => {
+                if (a.dependencies.includes(pack.name)) {
+                return (a.name);
+                }
+                }) */}
         </div>
         <div className="modal-footer">
           <button onClick={props.onClose} className="button">
