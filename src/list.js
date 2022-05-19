@@ -1,20 +1,46 @@
-import React from 'react'
+import React from "react";
+import { useState } from "react";
+import { useEffect } from "react";
+import Modal from "./Modal";
 
+export default function List(props) {
+  const [show, setShow] = useState(false);
 
-export default function list(props) {
+  const [pack, setPack] = useState([]);
 
+  function showModal(pack) {
+    setPack(pack);
+    setShow(true);
+  }
 
-
-    const packagelist = props.array.map((pack) =>
-    <li>{pack.name}</li>
-  );
+  if (show) {
+    return (
+      <div>
+        <Modal
+          pack={pack}
+          packagelist={props}
+          show={true}
+          onClose={() => setShow(false)}
+        />
+      </div>
+    );
+  }
 
   return (
-        <ul>{packagelist}</ul>
-
-  )
-  
+    <div>
+      <ul>
+        {props.array.map((pack) => {
+          return (
+            <li
+              className="list-group-item"
+              key={pack.name}
+              onClick={() => showModal(pack)}
+            >
+              {pack.name}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
 }
-
-
-

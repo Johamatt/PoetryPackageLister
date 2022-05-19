@@ -1,8 +1,9 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
 import parseData from "./parseData";
+import './css/styles.css'
 
-import List from "./list";
+import List from "./List";
 
 export default function App() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -14,7 +15,7 @@ export default function App() {
     if (isFileSelected) {
       parseData(selectedFile).then((data) => setData(data));
     }
-  }, [selectedFile]);
+  }, [isFileSelected]);
 
   const onChangeFile = (event) => {
     setSelectedFile(event.target.files[0]);
