@@ -1,7 +1,7 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
 import parseData from "./parseData";
-import './css/styles.css'
+import "./css/styles.css";
 
 import List from "./List";
 
@@ -24,14 +24,17 @@ export default function App() {
 
   return (
     <div>
-      <input type="file" name="file" onChange={onChangeFile} />
-      <p>Select a file to show details</p>
-        <div>
-          <List array={data}/>
+      <div className="header"></div>
+      <div className="listcontainer">
+        <div id="file-input">
+          <input type="file" name="file" onChange={onChangeFile} />
+          <p>Select a file to show details</p>
         </div>
 
-       
-
+        <div>
+          <List array={data} />
+        </div>
+      </div>
     </div>
   );
 }

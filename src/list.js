@@ -27,16 +27,20 @@ export default function List(props) {
   }
 
   return (
-    <div>
-      <ul>
+    <div className="list">
+     
+      <ul id = "limheight">
         {props.array.map((pack) => {
           return (
             <li
               className="list-group-item"
               key={pack.name}
               onClick={() => showModal(pack)}
-            >
-              {pack.name}
+            ><i class="fa-solid fa-link"></i>
+              
+               <a> {pack.name}</a>
+              
+              
             </li>
           );
         })}

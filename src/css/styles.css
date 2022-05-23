@@ -1,4 +1,4 @@
-/* .modal {
+.modal {
     position: fixed;
     left: 0;
     top: 0;
@@ -17,13 +17,14 @@
     padding: 10px;
 }
 
-.modal-header, .modal-footer {
+.modal-header,
+.modal-footer {
     padding: 10px;
+    text-align: center;
 }
 
 .modal-title {
     margin: 0;
-    text-align: center;
 }
 
 .modal-body {
@@ -32,7 +33,52 @@
     border-bottom: 1px solid #eee;
 }
 
-
 .modal-dependencies {
     display: inline-block;
-} */
+    width: 50%;
+    position: relative;
+    vertical-align: top;
+}
+
+
+.listcontainer {
+    position: absolute;
+    width: 700px;
+    height: 700px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    background-color: #eee;
+    
+  }
+
+ul {
+    list-style-type: none;
+
+}
+
+.root {
+    background-color: red;
+}
+
+
+
+a {
+    color: blue;
+    font-size: large;
+    cursor: pointer;
+}
+
+#limheight {
+
+    -webkit-column-count: 3;
+       -moz-column-count: 3;
+            column-count: 3; 
+}
+
+
+#file-input {
+    text-align: center;
+}

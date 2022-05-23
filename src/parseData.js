@@ -1,5 +1,3 @@
-
-
 export default async function parseData(props) {
     return new Promise((resolve, reject) => {
     let reader = new FileReader();
@@ -53,7 +51,7 @@ export default async function parseData(props) {
               let key = dependenciesPackage[i].split(" = ")[1].replace(/ *\([^)]*\) */g, ""); // remove text in brackets (version)            
               let arr = JSON.parse(key)
               for (let y = 0; y < arr.length; y++) {              
-                   obj.dependencies.push(arr[y]);
+                   obj.dependencies.push(arr[y].replace(/ *\[[^\]]*]/g, '')); // remove text in square brackets 
               }        
             }
           }

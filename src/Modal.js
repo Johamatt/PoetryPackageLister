@@ -5,18 +5,23 @@ import { useState } from "react";
 const Modal = (props) => {
   const [pack, setPack] = useState(props.pack);
   const [packagelist, setPackagelist] = useState(props.packagelist.array);
+  const [packagelistString, setPackagelistString] = useState([]);
 
-  const [reverseDependencies, setReverseDependencies] = useState([]);
+  useEffect(() => {
+    setPackagelistString(
+      packagelist.map((a) => {
+        return a.name;
+      })
+    );
+  }, []);
 
   if (!props.show) {
     return null;
   }
 
-  function searchLinkedDependecy(dependency) {
+  function searchLinkedDependecy(name) {
     packagelist.map((pack1) => {
-      if (dependency === pack1.name) {
-        // TODO: Include all optional dependencies as well, but
-        // make clickable only those that are installed
+      if (name === pack1.name) {
         setPack(pack1);
       }
     });
@@ -38,15 +43,21 @@ const Modal = (props) => {
             <div>
               <ul>
                 {pack.dependencies.length !== 0 ? (
-                  pack.dependencies.map((key) => {
-                    return (
-                      <li
-                        className="modal-dependencies"
-                        onClick={() => searchLinkedDependecy(key)}
-                      >
-                        {key},&nbsp;
-                      </li>
-                    );
+                  pack.dependencies.map((name) => {
+                    if (!packagelistString.includes(name)) {
+                        return (
+                          <li className="modal-dependencies">{name}</li>
+                        );
+                      } else {
+                        return (
+                          <li
+                            className="modal-dependencies"
+                            onClick={() => searchLinkedDependecy(name)} 
+                          > <i class="fa-solid fa-up-right-from-square"></i>
+                            <a> {name}</a>
+                          </li>
+                        );
+                      }
                   })
                 ) : (
                   <div />
@@ -60,23 +71,18 @@ const Modal = (props) => {
             <ul>
               {packagelist.map((a) => {
                 if (a.dependencies.includes(pack.name)) {
-                return (
-                  <li
-                    className="modal-dependecies"
-                    onClick={() => searchLinkedDependecy(a.name)}
-                  >
-                    {a.name}, &nbsp;
-                  </li>
-                );
-                }})}
+                  return (
+                    <li
+                      className="modal-dependecies"
+                      onClick={() => searchLinkedDependecy(a.name)}
+                    > <i class="fa-solid fa-up-right-from-square"></i>
+                      <a> {a.name}</a>
+                    </li>
+                  );
+                }
+              })}
             </ul>
           </div>
-
-          {/* packagelist.map((a) => {
-                if (a.dependencies.includes(pack.name)) {
-                return (a.name);
-                }
-                }) */}
         </div>
         <div className="modal-footer">
           <button onClick={props.onClose} className="button">
