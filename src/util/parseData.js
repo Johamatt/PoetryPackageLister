@@ -14,13 +14,11 @@ export default async function parseData(props) {
     .then((a) =>
       a.map((b) => {
         // every array element contains one package including its dependencies
-
+        let Packages = b.split(/\n\s*\n/);
         let obj = {
           dependencies: [],
         };
-
-
-        let Packages = b.split(/\n\s*\n/);
+        
         Packages.map((c) => {
           if (c.startsWith("name")) { // [[package]]
          let defaultPackage = c.split("\n");
@@ -33,7 +31,6 @@ export default async function parseData(props) {
             }
           }
 
-       
           if (c.startsWith("[package.dependencies]") ) {
             let dependenciesPackage = c.split("\n");
             dependenciesPackage.shift();
@@ -43,7 +40,6 @@ export default async function parseData(props) {
             }
          }
 
-   
           if (c.startsWith("[package.extras]")) {
             let dependenciesPackage = c.split("\n");
             dependenciesPackage.shift()
@@ -64,6 +60,10 @@ export default async function parseData(props) {
         return obj;
       })
     )
+
+
+
+
 
 
 

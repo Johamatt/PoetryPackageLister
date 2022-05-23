@@ -31,15 +31,13 @@ const Modal = (props) => {
     <div className="modal">
       <div className="modal-content">
         <div className="modal-header">
-          <h4 className="modal-title">Package info</h4>
+          <h4 className="modal-title">{pack.name}</h4>
         </div>
         <div className="modal-body">
-          <p>Name: {pack.name}</p>
+          <p>Name: {pack.name} </p>
           <p>Description: {pack.description}</p>
-
           <div>
             <h2>Dependencies: </h2>
-
             <div>
               <ul>
                 {pack.dependencies.length !== 0 ? (
